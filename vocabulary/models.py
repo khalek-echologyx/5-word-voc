@@ -24,3 +24,42 @@ class Vocabulary(models.Model):
 
     def __str__(self):
         return self.word
+
+
+class DailyVocabulary(models.Model):
+    date = models.DateField(unique=True)
+    words = models.ManyToManyField(
+        Vocabulary,
+        related_name="daily_vocabularies"
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Vocabulary for {self.date}"
+
+class DailyVocabularyOpen(models.Model):
+    daily_vocabulary = models.ForeignKey(
+        DailyVocabulary,
+        on_delete=models.CASCADE,
+        related_name="opens",
+    )
+
+    user = models.ForeignKey(
+        "auth.User",
+        on_delete=models.CASCADE,
+        related_name="daily_vocabulary_opens",
+    )
+
+    opened_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["daily_vocabulary", "user"],
+                name="unique_daily_vocabulary_open",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user} opened {self.daily_vocabulary.date}"
