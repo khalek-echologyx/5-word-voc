@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 def today_vocabulary(request):
     try:
         daily_vocabulary = generate_daily_words()
-
+        print(daily_vocabulary, "===========")
         serializer = DailyVocabularySerializer(daily_vocabulary)
 
         return Response({

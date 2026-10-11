@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third-party
     "rest_framework",
+    "django_apscheduler",
 
     # Local apps
     "users",
@@ -155,3 +156,13 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 DEFAULT_FROM_EMAIL = "noreply@5wordsperday.com"
+
+# Expo Push Notification service endpoint
+EXPO_PUSH_URL = env.str(
+    "EXPO_PUSH_URL",
+    default="https://exp.host/--/api/v2/push/send",
+)
+
+# APScheduler: store executed-job records for 7 days
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # seconds

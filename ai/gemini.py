@@ -82,9 +82,12 @@ def save_generated_words(words):
         word = word_data["word"].strip()
         normalized_word = word.lower()
 
-        if Vocabulary.objects.filter(
+        existing = Vocabulary.objects.filter(
             normalized_word=normalized_word
-        ).exists():
+        ).first()
+
+        if existing:
+            saved_words.append(existing)
             continue
 
         vocabulary = Vocabulary.objects.create(

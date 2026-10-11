@@ -26,5 +26,6 @@ def generate_daily_words():
     )
 
     daily_vocabulary.words.set(words)
+    print(daily_vocabulary, "daily_covabulary")
 
     return daily_vocabulary
